@@ -1,7 +1,9 @@
-import React from 'react';
+import { useState } from 'react';
 import { createGlobalStyle } from 'styled-components';
 import Router from './Router';
 import { ReactQueryDevtools } from 'react-query/devtools';
+import { darkTheme, lightTheme } from './theme';
+import { ThemeProvider } from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
@@ -68,12 +70,15 @@ a {
 `;
 
 function App() {
+  const [isDark, setIsDark] = useState(false);
+  const toggleDark = () => setIsDark((current) => !current);
   return (
-    <React.Fragment>
+    <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
+      <button onClick={toggleDark}>Toddle Mode</button>
       <GlobalStyle />
       <Router />
       <ReactQueryDevtools initialIsOpen={true} />
-    </React.Fragment>
+    </ThemeProvider>
   );
 }
 export default App;
